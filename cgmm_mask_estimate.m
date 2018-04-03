@@ -132,22 +132,6 @@ for iter = 1: num_iters
     fprintf('--- iter = %2d, Q = %.4f + %.4f = %.4f\n', iter, Qn, Qx, Qn + Qx);
 end
 
-% bigger entropy assigned to noise part
-%{
-for f = 1: num_bins
-    eig_value1 = eig(R_noise(:, :, f));
-    eig_value2 = eig(R_noisy(:, :, f));
-    en_noise = -eig_value1' / sum(eig_value1) * log(eig_value1 / sum(eig_value1));
-    en_noisy = -eig_value2' / sum(eig_value2) * log(eig_value2 / sum(eig_value2));
-    
-    if en_noise < en_noisy
-        lambda = lambda_noise(:, f);
-        lambda_noise(:, f) = lambda_noisy(:, f);
-        lambda_noisy(:, f) = lambda;
-    end
-end
-%}
-
 save([output '.mat'], 'lambda_noise');
 
 end
